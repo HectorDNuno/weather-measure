@@ -14,20 +14,27 @@
 
 <style lang="css" scoped>
 .weather-cards {
-  display: flex;
-  gap: 20px;
+  /* width: calc(100% / 5); */
 }
 .weather-cards .card {
   color: #fff;
-  padding: 18px 16px;
-  list-style: none;
-  width: calc(100% / 5);
   background: #6c757d;
-  border-radius: 5px;
+  list-style: none;
+  /* width: calc(100% / 5); */
+  border: 3px solid #000;
+  border-radius: 10px;
+  box-shadow: 5px 5px 0px #000;
+  padding: 1rem;
 }
 .weather-cards .card h3 {
   font-size: 1.3rem;
   font-weight: 600;
+}
+.weather-cards .card h6 {
+  margin-top: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 2px;
 }
 .weather-cards .card img {
   max-width: 70px;
