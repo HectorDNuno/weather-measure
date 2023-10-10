@@ -216,7 +216,6 @@ const getSearchResults = () => {
   .container {
     flex-direction: column;
     align-items: center;
-    max-width: 900px;
   }
 
   .weather-input {
