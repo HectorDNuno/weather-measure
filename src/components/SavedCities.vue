@@ -16,6 +16,7 @@
 <style lang="css" scoped>
 .current-weather {
   display: flex;
+  max-width: 330px;
   justify-content: space-between;
   border: 3px solid #000;
   border-radius: 10px;
@@ -48,5 +49,9 @@
   border-radius: 100%;
   box-shadow: 2px 2px 0px #000;
   cursor: pointer;
+}
+
+.current-weather i:hover {
+  color: #6c757d;
 }
 </style>
