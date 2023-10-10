@@ -1,7 +1,7 @@
 <template>
   <div class="current-weather">
     <div>
-      <h2>______ (______)</h2>
+      <h2>______</h2>
       <h6>Temperature: __&deg;F</h6>
       <h6>Wind: __ mph</h6>
       <h6>Humidity: __%</h6>
@@ -16,7 +16,6 @@
 <style lang="css" scoped>
 .current-weather {
   display: flex;
-  max-width: 330px;
   justify-content: space-between;
   border: 3px solid #000;
   border-radius: 10px;
