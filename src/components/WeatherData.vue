@@ -98,7 +98,7 @@ const { city, weather } = toRefs(props);
 <style lang="css" scoped>
 .weather-data {
   width: 100%;
-  max-width: 900px;
+  max-width: 950px;
 }
 .weather-data .current-weather {
   border: 3px solid #000;
@@ -166,5 +166,11 @@ const { city, weather } = toRefs(props);
   display: flex;
   justify-content: space-between;
   gap: 20px;
+}
+
+@media (max-width: 1265px) {
+  .weather-data {
+    max-width: none;
+  }
 }
 </style>
