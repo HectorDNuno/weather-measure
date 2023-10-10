@@ -2,6 +2,7 @@
   <div class="container">
     <div class="weather-input">
       <h2>Enter a City Name</h2>
+
       <input
         v-model="searchQuery"
         @input="getSearchResults"
@@ -10,7 +11,7 @@
         class="city-input"
       />
 
-      <ul v-if="geoAPIResults && !dropdownClosed" class="results-list">
+      <ul v-if="geoAPIResults && searchQuery !== ''" class="results-list">
         <p v-if="searchError" class="list-item">Sorry, something went wrong. Please try again.</p>
 
         <p v-if="!searchError && geoAPIResults.length === 0" class="list-item">No results</p>
@@ -26,6 +27,7 @@
           </li>
         </template>
       </ul>
+
       <div class="separator"></div>
       <button class="location-btn">Use Current Location</button>
     </div>
@@ -51,12 +53,12 @@ const geoAPIResults = ref(null);
 const searchError = ref(null);
 const selectedCity = ref(null);
 const weatherData = ref(null);
-const dropdownClosed = ref(false);
 
 const sendData = async (searchResult) => {
   try {
-    dropdownClosed.value = !dropdownClosed.value;
     selectedCity.value = searchResult;
+    searchQuery.value = '';
+    searchError.value = null;
     weatherData.value = await getWeatherData();
   } catch (error) {
     console.log(error);
@@ -113,10 +115,11 @@ const getSearchResults = () => {
 <style lang="css" scoped>
 .container {
   display: flex;
+  justify-content: center;
   gap: 2rem;
+  min-height: 495px;
 }
 .weather-input {
-  min-height: 495px;
   width: 30%;
   border: 3px solid #000;
   border-radius: 10px;
@@ -209,7 +212,13 @@ const getSearchResults = () => {
   color: #fff;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1265px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    max-width: 900px;
+  }
+
   .weather-input {
     width: 100%;
   }
