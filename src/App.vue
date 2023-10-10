@@ -1,11 +1,13 @@
 <template>
-  <div>
+  <div class="app">
+    <NavigationBar />
     <RouterView />
   </div>
 </template>
 
 <script setup>
-import { RouterView } from 'vue-router'
+import { RouterView } from 'vue-router';
+import NavigationBar from './components/NavigationBar.vue';
 </script>
 
 <style lang="css">
@@ -14,5 +16,9 @@ import { RouterView } from 'vue-router'
   padding: 0;
   box-sizing: border-box;
   font-family: 'Public Sans', sans-serif;
+}
+
+.app {
+  min-height: 100vh;
 }
 </style>
