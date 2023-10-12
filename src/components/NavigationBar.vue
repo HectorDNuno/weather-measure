@@ -62,7 +62,7 @@ const toggleModal = () => {
   top: 0;
   background: #3300ff;
   border-bottom: 3px solid #000;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 2rem;
 }
 
 .nav {
