@@ -49,10 +49,10 @@
     </div>
 
     <div class="days-forecast">
-      <h2>5-day Forecast</h2>
+      <h2>6-day Forecast</h2>
       <ul class="weather-cards">
         <template v-if="weather">
-          <li v-for="day in weather.daily.slice(1, 6)" :key="day.dt">
+          <li v-for="day in weather.daily.slice(1, 7)" :key="day.dt">
             <WeatherCard
               :data="{
                 date: day.dt,
@@ -163,8 +163,12 @@ const updateTime = () => {
 .days-forecast .weather-cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(160px, 1fr);
   gap: 20px;
+  padding: 0 1rem 1rem 0;
   list-style: none;
+  overflow-x: auto;
 }
 .days-forecast h2 {
   margin: 0.938rem 0;
@@ -174,6 +178,10 @@ const updateTime = () => {
 @media (max-width: 1265px) {
   .weather-data {
     max-width: none;
+  }
+
+  .days-forecast .weather-cards {
+    grid-auto-flow: row;
   }
 }
 </style>
