@@ -56,7 +56,7 @@
             <WeatherCard
               :data="{
                 date: day.dt,
-                hi: day.temp.max,
+                high: day.temp.max,
                 low: day.temp.min,
                 rain: day.rain,
                 img: day.weather[0].icon

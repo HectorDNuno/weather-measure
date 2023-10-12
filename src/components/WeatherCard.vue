@@ -7,7 +7,7 @@
 
     <img :src="`http://openweathermap.org/img/wn/${data.img}@2x.png`" alt="" />
 
-    <h4>High: {{ Math.round(data.hi) }}&deg;F</h4>
+    <h4>High: {{ Math.round(data.high) }}&deg;F</h4>
     <h4>Low: {{ Math.round(data.low) }}&deg;F</h4>
     <h4>Rain: {{ data.rain ? Math.round(data.rain) : 0 }}%</h4>
   </div>
