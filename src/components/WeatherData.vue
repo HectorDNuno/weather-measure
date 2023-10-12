@@ -1,60 +1,50 @@
 <template>
-  <div class="weather-data">
+  <div class="weather-data-container">
     <div class="current-weather">
-      <div v-if="city && weather" class="info">
-        <div class="details">
-          <h2>
-            {{ city.name + ',' }} {{ city.region === city.name ? city.country : city.region }}
-          </h2>
-          <h2>
-            {{ city.country }}
-          </h2>
+      <div v-if="city && weather" class="weather-info">
+        <div class="location">
+          <div>
+            <h2>
+              {{ city.name + ',' }} {{ city.region === city.name ? city.country : city.region }}
+            </h2>
+            <h2>
+              {{ city.country }}
+            </h2>
+          </div>
 
-          <div class="stuff">
-            <div>
-              <h6>
-                {{
-                  new Date(weather.currentTime).toLocaleDateString('en-us', {
-                    weekday: 'short',
-                    day: '2-digit',
-                    month: 'short'
-                  })
-                }}
-                {{
-                  new Date(weather.currentTime).toLocaleTimeString([], {
-                    timeStyle: 'short'
-                  })
-                }}
-              </h6>
-              <h6>Temperature: {{ Math.round(weather.current.temp) }}&deg;F</h6>
-              <h6>Wind: {{ Math.round(weather.current.wind_speed) }}mph</h6>
-            </div>
+          <i class="fa-solid fa-circle-plus fa-2x"></i>
+        </div>
 
-            <div>
-              <h6>Humidity: {{ weather.current.humidity }}%</h6>
+        <div class="weather-details">
+          <div>
+            <h6>
+              {{
+                new Date(weather.currentTime).toLocaleDateString('en-us', {
+                  weekday: 'short',
+                  day: '2-digit',
+                  month: 'short'
+                })
+              }}
+              {{ updateTime() }}
+            </h6>
+            <h6>Temperature: {{ Math.round(weather.current.temp) }}&deg;F</h6>
+            <h6>Humidity: {{ weather.current.humidity }}%</h6>
+          </div>
 
-              <h6>
-                Sunrise: {{ new Date(weather.current.sunrise * 1000).getHours() }} :
-                {{ new Date(weather.current.sunrise * 1000).getMinutes() }} am
-              </h6>
-              <h6>
-                Sunset:
-                {{ new Date(weather.current.sunset * 1000).getHours() - 12 }} :
-                {{ new Date(weather.current.sunset * 1000).getMinutes() }} pm
-              </h6>
-            </div>
+          <div>
+            <h6>High: {{ Math.round(weather.daily[0].temp.max) }}&deg;F</h6>
+            <h6>Low: {{ Math.round(weather.daily[0].temp.min) }}&deg;F</h6>
+            <h6>Wind: {{ Math.round(weather.current.wind_speed) }}mph</h6>
+          </div>
+
+          <div class="weather-image">
+            <img
+              :src="`http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`"
+              alt=""
+            />
+            <p>{{ weather.current.weather[0].description }}</p>
           </div>
         </div>
-
-        <div class="weather-image">
-          <img
-            :src="`http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`"
-            alt=""
-          />
-          <p>{{ weather.current.weather[0].description }}</p>
-        </div>
-
-        <i class="fa-solid fa-circle-plus fa-2x"></i>
       </div>
     </div>
 
@@ -66,8 +56,8 @@
             <WeatherCard
               :data="{
                 date: day.dt,
-                day: day.feels_like.day,
-                night: day.feels_like.night,
+                hi: day.temp.max,
+                low: day.temp.min,
                 rain: day.rain,
                 img: day.weather[0].icon
               }"
@@ -80,7 +70,7 @@
 </template>
 
 <script setup>
-import { toRefs } from 'vue';
+import { toRefs, ref } from 'vue';
 import WeatherCard from './WeatherCard.vue';
 
 const props = defineProps({
@@ -93,14 +83,33 @@ const props = defineProps({
 });
 
 const { city, weather } = toRefs(props);
+
+const currentTime = ref(null);
+
+const updateTime = () => {
+  const timezone = weather.value.timezone;
+  const timeStamp = weather.value.currentTime;
+  const timeNow = new Date();
+  const timeDifference = timeNow - timeStamp;
+
+  const updatedTime = new Date(timeStamp + timeDifference).toLocaleTimeString([], {
+    timeZone: timezone,
+    timeStyle: 'short'
+  });
+
+  currentTime.value = updatedTime;
+
+  setTimeout(updateTime, 10000);
+  return currentTime.value;
+};
 </script>
 
 <style lang="css" scoped>
-.weather-data {
+.weather-data-container {
   width: 100%;
   max-width: 950px;
 }
-.weather-data .current-weather {
+.weather-data-container .current-weather {
   border: 3px solid #000;
   border-radius: 10px;
   box-shadow: 5px 5px 0px #000;
@@ -110,7 +119,7 @@ const { city, weather } = toRefs(props);
   min-height: 230px;
 }
 
-.current-weather .info {
+.weather-info .location {
   display: flex;
   justify-content: space-between;
 }
@@ -120,24 +129,24 @@ const { city, weather } = toRefs(props);
   font-weight: 500;
   letter-spacing: 2px;
 }
-.current-weather .details {
-  cursor: pointer;
-  flex: 1;
-  /* text-align: center; */
-}
 .current-weather h2 {
   font-weight: 700;
   font-size: 1.7rem;
   letter-spacing: 2px;
 }
-
-.current-weather .weather-image {
-  flex: 0.5;
-  text-align: center;
-  align-self: center;
+.weather-info .weather-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  cursor: pointer;
 }
 
-.current-weather .info i {
+.weather-details .weather-image {
+  text-align: center;
+}
+
+.location i {
   height: min-content;
   background: #000;
   border: 3px solid #000;
@@ -146,7 +155,7 @@ const { city, weather } = toRefs(props);
   cursor: pointer;
 }
 
-.current-weather i:hover {
+.location i:hover {
   color: #aac7fe;
 }
 
@@ -160,12 +169,6 @@ const { city, weather } = toRefs(props);
 .days-forecast h2 {
   margin: 0.938rem 0;
   letter-spacing: 3px;
-}
-
-.stuff {
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
 }
 
 @media (max-width: 1265px) {
