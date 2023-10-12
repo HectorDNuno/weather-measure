@@ -43,9 +43,10 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import { geoApiOptions, geoAPIKey } from '../api';
-import { weatherAPIKey, weatherAPIUrl } from '../api';
+import { geoApiOptions, geoAPIUrl } from '../api';
 import WeatherData from './WeatherData.vue';
+
+const url = 'http://localhost:3000';
 
 const searchQuery = ref('');
 const queryTimeout = ref(null);
@@ -70,19 +71,13 @@ const getWeatherData = async () => {
     const { latitude, longitude } = selectedCity.value;
 
     const weatherData = await axios.get(
-      `${weatherAPIUrl}?lat=${latitude}&lon=${longitude}&exclude={part}&appid=${weatherAPIKey}&units=imperial`
+      `${url}?lat=${latitude}&lon=${longitude}&exclude={part}&units=imperial`
     );
 
     // cal current date & time
     const localOffset = new Date().getTimezoneOffset() * 60000;
     const utc = weatherData.data.current.dt * 1000 + localOffset;
     weatherData.data.currentTime = utc + 1000 * weatherData.data.timezone_offset;
-
-    // cal hourly weather offset
-    weatherData.data.hourly.forEach((hour) => {
-      const utc = hour.dt * 1000 + localOffset;
-      hour.currentTime = utc + 1000 * weatherData.data.timezone_offset;
-    });
 
     return weatherData.data;
   } catch (error) {
@@ -97,7 +92,7 @@ const getSearchResults = () => {
     if (searchQuery.value !== '') {
       try {
         const result = await axios.get(
-          `${geoAPIKey}/cities?namePrefix=${searchQuery.value}&sort=name`,
+          `${geoAPIUrl}?namePrefix=${searchQuery.value}&sort=name`,
           geoApiOptions
         );
 
