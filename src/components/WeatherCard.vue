@@ -1,36 +1,24 @@
 <template>
   <div class="card">
     <h3>
-      {{ getDay(data.date) }}
+      {{ new Date(data.date * 1000).toLocaleDateString('en-us', { weekday: 'short' }) }}
       {{ new Date(data.date * 1000).getDate() }}
     </h3>
 
     <img :src="`http://openweathermap.org/img/wn/${data.img}@2x.png`" alt="" />
 
-    <h4>Day: {{ Math.round(data.day) }}&deg;F</h4>
-    <h4>Night: {{ Math.round(data.night) }}&deg;F</h4>
+    <h4>Hi: {{ Math.round(data.hi) }}&deg;F</h4>
+    <h4>Low: {{ Math.round(data.low) }}&deg;F</h4>
     <h4>Rain: {{ data.rain ? Math.round(data.rain) : 0 }}%</h4>
   </div>
 </template>
 
 <script setup>
-import { toRefs } from 'vue';
-
-const props = defineProps({
+defineProps({
   data: {
     type: Object
   }
 });
-
-const { data } = toRefs(props);
-
-const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-
-const getDay = (date) => {
-  const day = new Date(date * 1000).getDay();
-
-  return weekDays[day];
-};
 </script>
 
 <style lang="css" scoped>
