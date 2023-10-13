@@ -47,31 +47,11 @@
         </div>
       </div>
     </div>
-
-    <div class="days-forecast">
-      <h2>6-day Forecast</h2>
-      <ul class="weather-cards">
-        <template v-if="weather">
-          <li v-for="day in weather.daily.slice(1, 7)" :key="day.dt">
-            <WeatherCard
-              :data="{
-                date: day.dt,
-                high: day.temp.max,
-                low: day.temp.min,
-                rain: day.rain,
-                img: day.weather[0].icon
-              }"
-            />
-          </li>
-        </template>
-      </ul>
-    </div>
   </div>
 </template>
 
 <script setup>
 import { toRefs, ref } from 'vue';
-import WeatherCard from './WeatherCard.vue';
 
 const props = defineProps({
   city: {
@@ -106,8 +86,6 @@ const updateTime = () => {
 
 <style lang="css" scoped>
 .weather-data-container {
-  width: 100%;
-  max-width: 950px;
 }
 .weather-data-container .current-weather {
   border: 3px solid #000;
@@ -116,7 +94,7 @@ const updateTime = () => {
   padding: 1rem;
   color: #fff;
   background: #3300ff;
-  min-height: 230px;
+  min-height: 240px;
 }
 
 .weather-info .location {
@@ -157,22 +135,6 @@ const updateTime = () => {
 
 .location i:hover {
   color: #aac7fe;
-}
-
-/* forecast */
-.days-forecast .weather-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(160px, 1fr);
-  gap: 20px;
-  padding: 0 1rem 1rem 0;
-  list-style: none;
-  overflow-x: auto;
-}
-.days-forecast h2 {
-  margin: 0.938rem 0;
-  letter-spacing: 3px;
 }
 
 @media (max-width: 1265px) {
