@@ -21,4 +21,14 @@ import NavigationBar from './components/NavigationBar.vue';
 .app {
   min-height: 100vh;
 }
+
+html {
+  overflow: hidden;
+  height: 100%;
+}
+
+body {
+  overflow: auto;
+  height: 100%;
+}
 </style>
