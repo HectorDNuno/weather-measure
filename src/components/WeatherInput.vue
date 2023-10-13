@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="weather-container">
     <div class="weather-input">
       <h2>Enter a City Name</h2>
 
@@ -32,11 +32,19 @@
       <button class="location-btn">Use Current Location</button>
     </div>
 
-    <Suspense>
-      <WeatherData :city="selectedCity" :weather="weatherData" />
+    <div class="weather-data">
+      <Suspense>
+        <WeatherData :city="selectedCity" :weather="weatherData" />
+        <template #fallback> <p>Loading...</p> </template>
+      </Suspense>
+    </div>
 
-      <template #fallback> <p>Loading...</p> </template>
-    </Suspense>
+    <div class="forecast">
+      <Suspense>
+        <ForecastData :weather="weatherData" />
+        <template #fallback> <p>Loading...</p> </template>
+      </Suspense>
+    </div>
   </div>
 </template>
 
@@ -45,6 +53,7 @@ import { ref } from 'vue';
 import axios from 'axios';
 import { geoApiOptions, geoAPIUrl } from '../api';
 import WeatherData from './WeatherData.vue';
+import ForecastData from './ForecastData.vue';
 
 const url = 'http://localhost:3000';
 
@@ -108,19 +117,35 @@ const getSearchResults = () => {
 </script>
 
 <style lang="css" scoped>
-.container {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  min-height: 495px;
+.weather-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  max-width: 1500px;
+  margin-left: auto;
+  margin-right: auto;
+  column-gap: 2rem;
+  /* row-gap: 1rem; */
 }
+
 .weather-input {
-  width: 30%;
+  padding: 1rem;
   border: 3px solid #000;
   border-radius: 10px;
   box-shadow: 5px 5px 0px #000;
-  padding: 1rem;
+  max-height: 240px;
+
+  grid-area: 1 / 1 / 2 / 2;
 }
+
+.weather-data {
+  grid-area: 1 / 2 / 2 / 4;
+}
+
+.forecast {
+  grid-area: 2 / 1 / 3 / 4;
+}
+
 .weather-input h2 {
   letter-spacing: 3px;
 }
@@ -186,7 +211,7 @@ const getSearchResults = () => {
   top: 195px;
   background-color: #fff;
   color: #000;
-  width: 26%;
+  width: 27.5%;
   padding: 0.5rem 0.25rem;
   list-style: none;
   border: 3px solid #000;
@@ -208,17 +233,17 @@ const getSearchResults = () => {
 }
 
 @media (max-width: 1265px) {
-  .container {
-    flex-direction: column;
-    align-items: center;
+  .weather-container {
+    grid-template-columns: repeat(1, minmax(300px, 650px));
   }
 
-  .weather-input {
-    width: 100%;
+  .weather-input,
+  .weather-data,
+  .forecast {
+    grid-area: auto;
   }
-
   .weather-input .results-list {
-    width: 85%;
+    width: 80%;
   }
 }
 </style>
