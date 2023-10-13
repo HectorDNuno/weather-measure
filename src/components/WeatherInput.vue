@@ -125,7 +125,6 @@ const getSearchResults = () => {
   margin-left: auto;
   margin-right: auto;
   column-gap: 2rem;
-  /* row-gap: 1rem; */
 }
 
 .weather-input {
@@ -235,6 +234,7 @@ const getSearchResults = () => {
 @media (max-width: 1265px) {
   .weather-container {
     grid-template-columns: repeat(1, minmax(300px, 650px));
+    row-gap: 2rem;
   }
 
   .weather-input,
