@@ -1,10 +1,10 @@
 <template>
   <div class="current-weather">
     <div>
-      <h2>______</h2>
-      <h6>Temperature: __&deg;F</h6>
-      <h6>Wind: __ mph</h6>
-      <h6>Humidity: __%</h6>
+      <h2>City Name</h2>
+      <h6>Temp: __&deg;F</h6>
+      <h6>H: __&deg;F</h6>
+      <h6>L: __&deg;F</h6>
     </div>
 
     <i class="fa-solid fa-circle-minus fa-2x"></i>
