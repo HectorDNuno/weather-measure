@@ -28,3 +28,4 @@ coverage
 *.sw?
 
 backend/.env
+src/api.js
