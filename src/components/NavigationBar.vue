@@ -38,6 +38,9 @@
             If you no longer wish to track a city, simply click the "-" icon in the top right of
             your saved city within the list.
           </p>
+          <br />
+
+          <p>(website still a work in progress)</p>
         </div>
       </BaseModal>
     </nav>
