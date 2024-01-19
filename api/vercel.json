@@ -1,7 +1,6 @@
 {
   "version": 2,
   "name": "local-weather-backend",
-  "framework": "node",
   "builds": [
    {
     "src": "index.js",
