@@ -1,16 +1,16 @@
 {
   "version": 2,
+  "name": "local-weather-backend",
+  "framework": "node",
   "builds": [
    {
     "src": "index.js",
-    "use": "@vercel/node",
-    "config": { "includeFiles": ["dist/**"] }
+    "use": "@vercel/node"
    }
   ],
   "routes": [
    {
     "src": "/(.*)",
-    "headers": { "Access-Control-Allow-Origin": "*" },
     "dest": "index.js"
    }
   ]
