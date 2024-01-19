@@ -9,7 +9,7 @@ const weatherAPIUrl = 'https://api.openweathermap.org/data/2.5/onecall';
 const weatherAPIKey = process.env.WEATHER_API_KEY;
 
 app.get('/', (req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', '*');
   res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   res.setHeader('Content-Type', 'text/html');
 
