@@ -29,3 +29,4 @@ coverage
 
 backend/.env
 src/api.js
+api/.env
