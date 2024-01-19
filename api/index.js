@@ -26,8 +26,6 @@ app.get('/', (req, res) => {
   axios(`${weatherAPIUrl}?${queryString}`).then((response) => {
     res.send(response.data);
   });
-
-  res.send('backend is wokring');
 });
 
 app.listen(port, () => {
