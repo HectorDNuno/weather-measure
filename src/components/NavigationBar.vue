@@ -61,8 +61,6 @@ const toggleModal = () => {
 
 <style lang="css" scoped>
 .container {
-  position: sticky;
-  top: 0;
   background: #3300ff;
   border-bottom: 3px solid #000;
   padding: 0.5rem 2rem;
@@ -99,7 +97,7 @@ const toggleModal = () => {
 }
 
 .nav .info i:hover {
-  color: #6c757d;
+  color: #ff00ff;
 }
 
 .content h1,
@@ -109,5 +107,11 @@ h2 {
 
 .content ol {
   padding: 0 2.5rem;
+}
+
+@media (max-width: 500px) {
+  .nav .branding {
+    font-size: 1rem;
+  }
 }
 </style>
