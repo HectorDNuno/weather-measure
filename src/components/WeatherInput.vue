@@ -34,14 +34,14 @@
 
     <div class="weather-data">
       <Suspense>
-        <WeatherData :city="selectedCity" :weather="weatherData" />
+        <Weather :city="selectedCity" :weather="weatherData" />
         <template #fallback> <p>Loading...</p> </template>
       </Suspense>
     </div>
 
     <div class="forecast">
       <Suspense>
-        <ForecastData :weather="weatherData" />
+        <Forecast :weather="weatherData" />
         <template #fallback> <p>Loading...</p> </template>
       </Suspense>
     </div>
@@ -52,10 +52,8 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import { geoApiOptions, geoAPIUrl } from '../api';
-import WeatherData from './WeatherData.vue';
-import ForecastData from './ForecastData.vue';
-
-const url = 'http://localhost:3000';
+import Weather from './Weather.vue';
+import Forecast from './Forecast.vue';
 
 const searchQuery = ref('');
 const queryTimeout = ref(null);
@@ -64,6 +62,7 @@ const searchError = ref(null);
 const selectedCity = ref(null);
 const weatherData = ref(null);
 
+const url = 'https://local-weather-backend.vercel.app/';
 const sendData = async (searchResult) => {
   try {
     selectedCity.value = searchResult;
@@ -120,10 +119,8 @@ const getSearchResults = () => {
 .weather-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: repeat(auto-fill, 1fr);
   max-width: 1500px;
-  margin-left: auto;
-  margin-right: auto;
   column-gap: 2rem;
 }
 
@@ -133,16 +130,15 @@ const getSearchResults = () => {
   border-radius: 10px;
   box-shadow: 5px 5px 0px #000;
   max-height: 240px;
-
-  grid-area: 1 / 1 / 2 / 2;
+  background-color: #fec700;
 }
 
 .weather-data {
-  grid-area: 1 / 2 / 2 / 4;
+  grid-column: 2 / span 2;
 }
 
 .forecast {
-  grid-area: 2 / 1 / 3 / 4;
+  grid-column: 1 / span 3;
 }
 
 .weather-input h2 {
@@ -180,7 +176,7 @@ const getSearchResults = () => {
   letter-spacing: 2px;
   padding: 0 15px;
   margin-top: -4px;
-  background: #fff;
+  background: #fec700;
 }
 .weather-input button {
   width: 100%;
@@ -216,6 +212,7 @@ const getSearchResults = () => {
   border: 3px solid #000;
   border-radius: 10px;
   box-shadow: 5px 5px 0px #000;
+  z-index: 2;
 }
 
 .results-list .list-item {
