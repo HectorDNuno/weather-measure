@@ -27,6 +27,4 @@ coverage
 *.sln
 *.sw?
 
-backend/.env
-src/api.js
-api/.env -f 
+api/.env
