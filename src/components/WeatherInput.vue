@@ -34,14 +34,14 @@
 
     <div class="weather-data">
       <Suspense>
-        <Weather :city="selectedCity" :weather="weatherData" />
+        <CityWeather :city="selectedCity" :weather="weatherData" />
         <template #fallback> <p>Loading...</p> </template>
       </Suspense>
     </div>
 
     <div class="forecast">
       <Suspense>
-        <Forecast :weather="weatherData" />
+        <CityForecast :weather="weatherData" />
         <template #fallback> <p>Loading...</p> </template>
       </Suspense>
     </div>
@@ -51,9 +51,8 @@
 <script setup>
 import { ref } from 'vue';
 import axios from 'axios';
-import { geoApiOptions, geoAPIUrl } from '../api';
-import Weather from './Weather.vue';
-import Forecast from './Forecast.vue';
+import CityWeather from './CityWeather.vue';
+import CityForecast from './CityForecast.vue';
 
 const searchQuery = ref('');
 const queryTimeout = ref(null);
@@ -62,7 +61,6 @@ const searchError = ref(null);
 const selectedCity = ref(null);
 const weatherData = ref(null);
 
-const url = 'https://local-weather-backend.vercel.app/';
 const sendData = async (searchResult) => {
   try {
     selectedCity.value = searchResult;
@@ -76,6 +74,7 @@ const sendData = async (searchResult) => {
 
 const getWeatherData = async () => {
   try {
+    const url = 'https://local-weather-backend.vercel.app/weather';
     const { latitude, longitude } = selectedCity.value;
 
     const weatherData = await axios.get(
@@ -94,15 +93,14 @@ const getWeatherData = async () => {
 };
 
 const getSearchResults = () => {
+  const url = 'https://local-weather-backend.vercel.app/search';
+
   clearTimeout(queryTimeout.value);
 
   queryTimeout.value = setTimeout(async () => {
     if (searchQuery.value !== '') {
       try {
-        const result = await axios.get(
-          `${geoAPIUrl}?namePrefix=${searchQuery.value}&sort=name`,
-          geoApiOptions
-        );
+        const result = await axios.get(`${url}?namePrefix=${searchQuery.value}&sort=name`);
 
         geoAPIResults.value = result.data.data;
       } catch (error) {
