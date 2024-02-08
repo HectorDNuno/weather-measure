@@ -38,8 +38,6 @@ app.get('/search', async (req, res) => {
   }
 });
 
-// /search?namePrefix=seattle&sort=name
-
 app.get('/weather', async (req, res) => {
   try {
     const response = await axios.get(weatherAPIUrl, {
@@ -53,7 +51,6 @@ app.get('/weather', async (req, res) => {
   }
 });
 
-// /weather?lat=47.60621&lon=-122.33207&exlude={part}&units=imperial
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
