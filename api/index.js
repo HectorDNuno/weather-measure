@@ -20,16 +20,16 @@ app.get('/', (req, res) => {
 
 app.get('/search', async (req, res) => {
   try {
-    const geoApiOptions = {
+    const options = {
       method: 'GET',
+      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
       headers: {
         'X-RapidAPI-Key': geoAPIKey,
         'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
       }
     };
-    const geoAPIUrl = 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities';
 
-    const response = await axios.get(geoAPIUrl, { params: req.query, ...geoApiOptions });
+    const response = await axios.get(options.url, { params: req.query, ...options });
 
     res.json(response.data);
   } catch (error) {
