@@ -18,7 +18,7 @@ import { onMounted, watchEffect } from 'vue';
 import { sharedState } from '../state';
 import axios from 'axios';
 
-const url = 'https://local-weather-backend.vercel.app/';
+const url = 'https://local-weather-backend.vercel.app/weather';
 
 const removeCity = (id) => {
   const index = sharedState.savedCities.findIndex((city) => city.id === id);
