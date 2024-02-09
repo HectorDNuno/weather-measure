@@ -51,6 +51,32 @@ app.get('/weather', async (req, res) => {
   }
 });
 
+app.get('/location', async (req, res) => {
+  try {
+    const { lat, lon } = req.query;
+    const combinedCoordinates = lat + lon;
+
+    const options = {
+      method: 'GET',
+      url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/places',
+      params: {
+        location: combinedCoordinates
+      },
+      headers: {
+        'X-RapidAPI-Key': geoAPIKey,
+        'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com'
+      }
+    };
+
+    const response = await axios.get(options.url, options);
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
