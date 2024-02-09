@@ -29,7 +29,7 @@
       </ul>
 
       <div class="separator"></div>
-      <button class="location-btn">Use Current Location</button>
+      <button @click="getLocation" class="location-btn">Use Current Location</button>
     </div>
 
     <div class="weather-data">
@@ -61,9 +61,9 @@ const searchError = ref(null);
 const selectedCity = ref(null);
 const weatherData = ref(null);
 
-const sendData = async (searchResult) => {
+const sendData = async (city) => {
   try {
-    selectedCity.value = searchResult;
+    selectedCity.value = city;
     searchQuery.value = '';
     searchError.value = null;
     weatherData.value = await getWeatherData();
@@ -110,6 +110,38 @@ const getSearchResults = () => {
     }
     geoAPIResults.value = null;
   }, 300);
+};
+
+const getLocation = () => {
+  let message = '';
+
+  const success = async (position) => {
+    try {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+      const url = 'https://local-weather-backend.vercel.app/location';
+
+      const location = await axios.get(`${url}?lat=${latitude}&lon=${longitude}`);
+
+      location.data.data[0].city = location.data.data[0].name;
+
+      sendData(location.data.data[0]);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const error = () => {
+    message = 'Unable to retrieve your location';
+    console.log(message);
+  };
+
+  if (!navigator.geolocation) {
+    message = 'geolocation is not supported by your browser';
+    console.log(message);
+  } else {
+    navigator.geolocation.getCurrentPosition(success, error);
+  }
 };
 </script>
 
