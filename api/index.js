@@ -53,8 +53,7 @@ app.get('/weather', async (req, res) => {
 
 app.get('/location', async (req, res) => {
   try {
-    const { lat, lon } = req.query;
-    const combinedCoordinates = lat + lon;
+    const combinedCoordinates = req.query.lat + req.query.lon;
 
     const options = {
       method: 'GET',
