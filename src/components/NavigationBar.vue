@@ -3,7 +3,7 @@
     <nav class="nav">
       <RouterLink :to="{ name: 'home' }" style="text-decoration: none; color: inherit">
         <div class="branding">
-          <h1>Local Weather</h1>
+          <h1>Weather Measure</h1>
           <i class="fa-solid fa-certificate fa-2x"></i>
         </div>
       </RouterLink>
