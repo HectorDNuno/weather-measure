@@ -10,19 +10,9 @@ const geoAPIKey = process.env.GEO_API_KEY;
 
 app.use(
   cors({
-    origin: ['http://localhost:5173', 'https://mellow-beignet-bd99f1.netlify.app/'],
-    default: 'http://localhost:5173'
+    origin: ['http://localhost:5173', 'https://mellow-beignet-bd99f1.netlify.app/']
   })
 );
-
-app.all('*', (req, res, next) => {
-  const origin = cors.origin.includes(req.header('origin').toLowerCase())
-    ? req.headers.origin
-    : cors.default;
-  res.header('Access-Control-Allow-Origin', origin);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 
 app.get('/', (req, res) => {
   res.json('local weather backend');
