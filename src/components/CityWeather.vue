@@ -5,7 +5,6 @@
         <h2>{{ city.name + ',' }} {{ city.region === city.name ? city.country : city.region }}</h2>
 
         <i @click="addCity" class="fa-solid fa-circle-plus fa-2x"> </i>
-        <p class="message">{{ message }}</p>
       </div>
 
       <div class="weather-details">
@@ -75,10 +74,8 @@ const updateTime = () => {
 
 const addCity = () => {
   if (sharedState.savedCities.some((savedCity) => savedCity.city === city.value.name)) {
-    message.value = 'already saved!';
     return;
   } else if (sharedState.savedCities.length === 4) {
-    message.value = 'reached max amount of cities';
     return;
   } else {
     const locaitonObj = {
@@ -94,7 +91,6 @@ const addCity = () => {
     };
 
     sharedState.savedCities.push(locaitonObj);
-    message.value = 'city saved!';
   }
 };
 </script>
