@@ -10,20 +10,15 @@ const geoAPIKey = process.env.GEO_API_KEY;
 
 app.use(
   cors({
-    origin: 'https://mellow-beignet-bd99f1.netlify.app/'
+    origin: 'http://localhost:5173/'
   })
 );
-
-const corsOptions = {
-  origin: 'https://mellow-beignet-bd99f1.netlify.app/',
-  optionsSuccessStatus: 200
-};
 
 app.get('/', (req, res) => {
   res.json('local weather backend');
 });
 
-app.get('/search', cors(corsOptions), async (req, res) => {
+app.get('/search', async (req, res) => {
   try {
     const options = {
       method: 'GET',
@@ -43,7 +38,7 @@ app.get('/search', cors(corsOptions), async (req, res) => {
   }
 });
 
-app.get('/weather', cors(corsOptions), async (req, res) => {
+app.get('/weather', async (req, res) => {
   try {
     const response = await axios.get(weatherAPIUrl, {
       params: { ...req.query, appid: weatherAPIKey }
@@ -56,7 +51,7 @@ app.get('/weather', cors(corsOptions), async (req, res) => {
   }
 });
 
-app.get('/location', cors(corsOptions), async (req, res) => {
+app.get('/location', async (req, res) => {
   try {
     const combinedCoordinates = req.query.lat + req.query.lon;
 
