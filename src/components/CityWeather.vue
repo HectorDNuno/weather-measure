@@ -53,7 +53,6 @@ const props = defineProps({
 const { city, weather } = toRefs(props);
 
 const currentTime = ref(null);
-const message = ref('');
 
 const updateTime = () => {
   const timezone = weather.value.timezone;
