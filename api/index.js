@@ -10,7 +10,7 @@ const geoAPIKey = process.env.GEO_API_KEY;
 
 app.use(
   cors({
-    origin: 'https://weather-measure.netlify.app'
+    origin: 'https://local-weather-backend.vercel.app'
   })
 );
 
