@@ -4,13 +4,13 @@ const cors = require('cors');
 const axios = require('axios');
 require('dotenv').config();
 
-const weatherAPIUrl = 'https://api.openweathermap.org/data/2.5/onecall';
+const weatherAPIUrl = 'https://api.openweathermap.org/data/3.0/onecall';
 const weatherAPIKey = process.env.WEATHER_API_KEY;
 const geoAPIKey = process.env.GEO_API_KEY;
 
 app.use(
   cors({
-    origin: 'https://local-weather-backend.vercel.app'
+    origin: 'https://weather-measure.netlify.app'
   })
 );
 
