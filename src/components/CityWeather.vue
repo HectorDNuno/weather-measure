@@ -9,28 +9,29 @@
 
       <div class="weather-details">
         <h6 class="time">
-          {{
+          <!-- {{
             new Date(weather.currentTime).toLocaleDateString('en-us', {
               weekday: 'short',
               day: '2-digit',
               month: 'short'
             })
-          }}
-          {{ updateTime() }}
+            weather.currentTime
+          }} -->
+          <!-- {{ updateTime() }} -->
         </h6>
-        <h6 class="temperature">Temperature: {{ Math.round(weather.current.temp) }}&deg;F</h6>
-        <h6 class="humidity">Humidity: {{ weather.current.humidity }}%</h6>
+        <h6 class="temperature">Temperature: {{ Math.round(weather.main.temp) }}&deg;F</h6>
+        <h6 class="humidity">Humidity: {{ weather.main.humidity }}%</h6>
 
-        <h6 class="high">High: {{ Math.round(weather.daily[0].temp.max) }}&deg;F</h6>
-        <h6 class="low">Low: {{ Math.round(weather.daily[0].temp.min) }}&deg;F</h6>
-        <h6 class="wind">Wind: {{ Math.round(weather.current.wind_speed) }}mph</h6>
+        <h6 class="high">High: {{ Math.round(weather.main.temp_max) }}&deg;F</h6>
+        <h6 class="low">Low: {{ Math.round(weather.main.temp_min) }}&deg;F</h6>
+        <h6 class="wind">Wind: {{ Math.round(weather.wind.speed) }}mph</h6>
 
         <div class="weather-image">
           <img
-            :src="`http://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`"
+            :src="`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`"
             alt="current weather image"
           />
-          <p>{{ weather.current.weather[0].description }}</p>
+          <p>{{ weather.weather[0].description }}</p>
         </div>
       </div>
     </div>
