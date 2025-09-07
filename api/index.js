@@ -1,16 +1,20 @@
-const express = require('express');
+/* eslint-disable no-undef */
+import express from 'express';
 const app = express();
-const cors = require('cors');
-const axios = require('axios');
-require('dotenv').config();
-
-const weatherAPIUrl = 'https://api.openweathermap.org/data/3.0/onecall';
+import cors from 'cors';
+import axios from 'axios';
+import errorHandler from './middleware/error.js';
+const weatherAPIUrl = 'https://api.openweathermap.org/data/2.5/weather';
+const port = process.env.PORT;
 const weatherAPIKey = process.env.WEATHER_API_KEY;
 const geoAPIKey = process.env.GEO_API_KEY;
 
 app.use(
   cors({
-    origin: 'https://weather-measure.netlify.app'
+    // origin: 'https://weather-measure.netlify.app'
+    // origin: 'http://localhost:5173/'
+    // origin: 'http://localhost:3000/'
+    origin: '*'
   })
 );
 
@@ -46,8 +50,7 @@ app.get('/weather', async (req, res) => {
 
     res.json(response.data);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(parseInt(error.response.data.cod)).json({ msg: `${error}`, url: `${req.url}` });
   }
 });
 
@@ -72,11 +75,12 @@ app.get('/location', async (req, res) => {
     res.json(response.data);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(parseInt(error.response.data.cod)).json({ msg: `${error}`, url: `${req.url}` });
   }
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+app.use(errorHandler);
+
+app.listen(port, () => {
+  console.log(`server running on http://localhost:${port}/`);
 });
