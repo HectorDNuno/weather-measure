@@ -39,12 +39,12 @@
       </Suspense>
     </div>
 
-    <div class="forecast">
+    <!-- <div class="forecast">
       <Suspense>
         <CityForecast :weather="weatherData" />
         <template #fallback> <p>Loading...</p> </template>
       </Suspense>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -52,7 +52,7 @@
 import { ref } from 'vue';
 import axios from 'axios';
 import CityWeather from './CityWeather.vue';
-import CityForecast from './CityForecast.vue';
+// import CityForecast from './CityForecast.vue';
 
 const searchQuery = ref('');
 const queryTimeout = ref(null);
@@ -74,18 +74,17 @@ const sendData = async (city) => {
 
 const getWeatherData = async () => {
   try {
-    const url = 'https://local-weather-backend.vercel.app/weather';
+    // const url = 'https://local-weather-backend.vercel.app/weather';
+    const url = 'http://localhost:3000/weather';
     const { latitude, longitude } = selectedCity.value;
 
-    const weatherData = await axios.get(
-      `${url}?lat=${latitude}&lon=${longitude}&exclude={part}&units=imperial`
-    );
+    const weatherData = await axios.get(`${url}?lat=${latitude}&lon=${longitude}&units=imperial`);
 
     // cal current date & time
     const localOffset = new Date().getTimezoneOffset() * 60000;
-    const utc = weatherData.data.current.dt * 1000 + localOffset;
-    weatherData.data.currentTime = utc + 1000 * weatherData.data.timezone_offset;
-
+    const utc = weatherData.data.dt * 1000 + localOffset;
+    weatherData.data.currentTime = utc + 1000 * weatherData.data.timezone;
+    console.log(weatherData.data);
     return weatherData.data;
   } catch (error) {
     console.log(error);
@@ -93,7 +92,8 @@ const getWeatherData = async () => {
 };
 
 const getSearchResults = () => {
-  const url = 'https://local-weather-backend.vercel.app/search';
+  // const url = 'https://local-weather-backend.vercel.app/search';
+  const url = 'http://localhost:3000/search';
 
   clearTimeout(queryTimeout.value);
 
@@ -119,7 +119,8 @@ const getLocation = () => {
     try {
       const latitude = position.coords.latitude;
       const longitude = position.coords.longitude;
-      const url = 'https://local-weather-backend.vercel.app/location';
+      // const url = 'https://local-weather-backend.vercel.app/location';
+      const url = 'http://localhost:3000/location';
 
       const location = await axios.get(`${url}?lat=${latitude}&lon=${longitude}`);
 
