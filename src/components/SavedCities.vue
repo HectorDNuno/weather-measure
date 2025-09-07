@@ -18,7 +18,8 @@ import { onMounted, watchEffect } from 'vue';
 import { sharedState } from '../state';
 import axios from 'axios';
 
-const url = 'https://local-weather-backend.vercel.app/weather';
+// const url = 'https://local-weather-backend.vercel.app/weather';
+const url = 'http://localhost:3000/weather';
 
 const removeCity = (id) => {
   const index = sharedState.savedCities.findIndex((city) => city.id === id);
@@ -36,13 +37,13 @@ const getCityWeatherData = () => {
         const longitude = city.coords.lon;
 
         const cityWeatherData = await axios.get(
-          `${url}?lat=${latitude}&lon=${longitude}&exclude={part}&units=imperial`
+          `${url}?lat=${latitude}&lon=${longitude}&units=imperial`
         );
 
         sharedState.savedCities[index].weather = {
-          currentTemp: cityWeatherData.data.current.temp,
-          highTemp: cityWeatherData.data.daily[0].temp.max,
-          lowTemp: cityWeatherData.data.daily[0].temp.min
+          currentTemp: cityWeatherData.data.main.temp,
+          highTemp: cityWeatherData.data.main.temp_max,
+          lowTemp: cityWeatherData.data.main.temp_min
         };
       });
     });
