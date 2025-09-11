@@ -1,9 +1,8 @@
 <template>
-  <h2 class="section-title">7-day Forecast</h2>
-
+  <h2 class="section-title">5-day Forecast</h2>
   <div class="cards">
-    <template v-if="weather">
-      <div v-for="day in weather.daily.slice(1, 8)" :key="day.dt" class="card-details">
+    <template v-if="forecast">
+      <div v-for="day in formatForecast()" :key="day.dt" class="card-details">
         <h3>
           {{ new Date(day.dt * 1000).toLocaleDateString('en-us', { weekday: 'short' }) }}
           {{ new Date(day.dt * 1000).getDate() }}
@@ -11,20 +10,41 @@
 
         <img :src="`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`" />
 
-        <h4>High: {{ Math.round(day.temp.max) }}&deg;F</h4>
-        <h4>Low: {{ Math.round(day.temp.min) }}&deg;F</h4>
-        <h4>Rain: {{ day.rain ? Math.round(day.rain) : 0 }}%</h4>
+        <h4>High: {{ Math.round(day.main.temp_max) }}&deg;F</h4>
+        <h4>Low: {{ Math.round(day.main.temp_min) }}&deg;F</h4>
+        <h4>{{ day.weather[0].description }}</h4>
       </div>
     </template>
   </div>
 </template>
 
 <script setup>
-defineProps({
-  weather: {
+import { toRefs } from 'vue';
+
+const props = defineProps({
+  forecast: {
     type: Object
   }
 });
+
+const { forecast } = toRefs(props);
+
+const formatForecast = () => {
+  const forecastArray = forecast.value.list;
+  const fiveDayForecast = [];
+  const seenDates = [];
+
+  forecastArray.forEach((item) => {
+    const date = item.dt_txt.split(' ')[0];
+
+    if (!seenDates.includes(date)) {
+      seenDates.push(date);
+      fiveDayForecast.push(item);
+    }
+  });
+
+  return fiveDayForecast.slice(1);
+};
 </script>
 
 <style lang="css" scoped>
@@ -44,7 +64,7 @@ img {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(7, minmax(160px, 1fr));
+  grid-template-columns: repeat(5, minmax(160px, 1fr));
   gap: 2rem;
 
   min-height: 300px;
