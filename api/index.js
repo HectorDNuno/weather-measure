@@ -4,7 +4,7 @@ const app = express();
 import cors from 'cors';
 import axios from 'axios';
 import errorHandler from './middleware/error.js';
-const weatherAPIUrl = 'https://api.openweathermap.org/data/2.5/weather';
+const weatherAPIUrl = 'https://api.openweathermap.org/data/2.5';
 const port = process.env.PORT;
 const weatherAPIKey = process.env.WEATHER_API_KEY;
 const geoAPIKey = process.env.GEO_API_KEY;
@@ -44,7 +44,19 @@ app.get('/search', async (req, res) => {
 
 app.get('/weather', async (req, res) => {
   try {
-    const response = await axios.get(weatherAPIUrl, {
+    const response = await axios.get(weatherAPIUrl + '/weather', {
+      params: { ...req.query, appid: weatherAPIKey }
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    res.status(parseInt(error.response.data.cod)).json({ msg: `${error}`, url: `${req.url}` });
+  }
+});
+
+app.get('/forecast', async (req, res) => {
+  try {
+    const response = await axios.get(weatherAPIUrl + '/forecast', {
       params: { ...req.query, appid: weatherAPIKey }
     });
 
