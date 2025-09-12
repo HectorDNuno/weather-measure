@@ -64,12 +64,11 @@ img {
 
 .cards {
   display: grid;
-  grid-template-columns: repeat(5, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   gap: 2rem;
 
   min-height: 300px;
-  padding: 1rem 1rem 5rem 0;
-  overflow: auto;
+  padding: 1rem 0;
 }
 .card-details {
   color: #000000;
@@ -77,7 +76,8 @@ img {
   border: 3px solid #000;
   border-radius: 10px;
   box-shadow: 5px 5px 0px #000;
-  padding: 1rem 0;
+  padding: 3rem 0;
   text-align: center;
+  font-size: 1.2rem;
 }
 </style>
