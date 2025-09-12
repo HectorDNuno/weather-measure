@@ -3,28 +3,16 @@
     <div v-if="city && weather" class="weather-info">
       <div class="location">
         <h2>{{ city.name + ',' }} {{ city.region === city.name ? city.country : city.region }}</h2>
-
         <i @click="addCity" class="fa-solid fa-circle-plus fa-2x"> </i>
       </div>
 
       <div class="weather-details">
-        <h6 class="time">
-          <!-- {{
-            new Date(weather.currentTime).toLocaleDateString('en-us', {
-              weekday: 'short',
-              day: '2-digit',
-              month: 'short'
-            })
-            weather.currentTime
-          }} -->
-          <!-- {{ updateTime() }} -->
-        </h6>
         <h6 class="temperature">Temperature: {{ Math.round(weather.main.temp) }}&deg;F</h6>
-        <h6 class="humidity">Humidity: {{ weather.main.humidity }}%</h6>
-
         <h6 class="high">High: {{ Math.round(weather.main.temp_max) }}&deg;F</h6>
         <h6 class="low">Low: {{ Math.round(weather.main.temp_min) }}&deg;F</h6>
+        <h6 class="humidity">Humidity: {{ weather.main.humidity }}%</h6>
         <h6 class="wind">Wind: {{ Math.round(weather.wind.speed) }}mph</h6>
+        <h6 class="clouds">Clouds: {{ weather.clouds.all }}%</h6>
 
         <div class="weather-image">
           <img
@@ -52,25 +40,6 @@ const props = defineProps({
 });
 
 const { city, weather } = toRefs(props);
-
-const currentTime = ref(null);
-
-const updateTime = () => {
-  const timezone = weather.value.timezone;
-  const timeStamp = weather.value.currentTime;
-  const timeNow = new Date();
-  const timeDifference = timeNow - timeStamp;
-
-  const updatedTime = new Date(timeStamp + timeDifference).toLocaleTimeString([], {
-    timeZone: timezone,
-    timeStyle: 'short'
-  });
-
-  currentTime.value = updatedTime;
-
-  setTimeout(updateTime, 10000);
-  return currentTime.value;
-};
 
 const addCity = () => {
   if (sharedState.savedCities.some((savedCity) => savedCity.city === city.value.name)) {
@@ -125,7 +94,7 @@ const addCity = () => {
 .weather-info .weather-details {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  margin-top: 1.5rem;
+  margin-top: 1rem;
 }
 
 .weather-details .weather-image {
@@ -138,15 +107,24 @@ const addCity = () => {
 }
 
 .temperature {
-  grid-row: 2;
+  grid-row: 1;
 }
-.humidity {
-  grid-row: 3;
+
+.high {
+  grid-row: 2;
 }
 
 .low {
-  grid-column: 2;
+  grid-column: 1;
+  grid-row: 3;
+}
+
+.humidity {
   grid-row: 2;
+}
+
+.clouds {
+  grid-row: 1;
 }
 
 .wind {
@@ -210,10 +188,6 @@ const addCity = () => {
   .weather-info .weather-details {
     text-align: center;
     margin-top: 1rem;
-  }
-
-  .time {
-    grid-column: 1 / span 3;
   }
 
   .temperature {
