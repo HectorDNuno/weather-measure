@@ -27,7 +27,7 @@
 </template>
 
 <script setup>
-import { toRefs, ref } from 'vue';
+import { toRefs } from 'vue';
 import { sharedState } from '../state';
 
 const props = defineProps({
