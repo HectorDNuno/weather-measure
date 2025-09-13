@@ -18,8 +18,7 @@ import { onMounted, watchEffect } from 'vue';
 import { sharedState } from '../state';
 import axios from 'axios';
 
-// const url = 'https://local-weather-backend.vercel.app/weather';
-const url = 'http://localhost:3000/weather';
+const url = 'https://local-weather-backend.vercel.app/weather';
 
 const removeCity = (id) => {
   const index = sharedState.savedCities.findIndex((city) => city.id === id);
@@ -63,10 +62,12 @@ onMounted(() => {
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
 }
+
 .title {
   margin: 1rem 0;
   letter-spacing: 2px;
 }
+
 .city-weather {
   display: flex;
   justify-content: space-between;
@@ -77,6 +78,7 @@ onMounted(() => {
   color: #000;
   background: #c6b9ff;
 }
+
 .city-weather h6 {
   margin-top: 12px;
   font-size: 1rem;
