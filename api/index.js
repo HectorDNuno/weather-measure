@@ -4,7 +4,7 @@ const app = express();
 import cors from 'cors';
 import axios from 'axios';
 const weatherAPIUrl = 'https://api.openweathermap.org/data/2.5';
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const weatherAPIKey = process.env.WEATHER_API_KEY;
 const geoAPIKey = process.env.GEO_API_KEY;
 
