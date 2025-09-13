@@ -1,10 +1,10 @@
-/* eslint-disable no-undef */
-import express from 'express';
+const express = require('express');
 const app = express();
-import cors from 'cors';
-import axios from 'axios';
+const cors = require('cors');
+const axios = require('axios');
+require('dotenv').config();
 const weatherAPIUrl = 'https://api.openweathermap.org/data/2.5';
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 const weatherAPIKey = process.env.WEATHER_API_KEY;
 const geoAPIKey = process.env.GEO_API_KEY;
 
