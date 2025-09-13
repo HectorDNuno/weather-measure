@@ -7,19 +7,19 @@
       </div>
 
       <div class="weather-details">
-        <h6 class="temperature">Temperature: {{ Math.round(weather.main.temp) }}&deg;F</h6>
-        <h6 class="high">High: {{ Math.round(weather.main.temp_max) }}&deg;F</h6>
-        <h6 class="low">Low: {{ Math.round(weather.main.temp_min) }}&deg;F</h6>
-        <h6 class="humidity">Humidity: {{ weather.main.humidity }}%</h6>
-        <h6 class="wind">Wind: {{ Math.round(weather.wind.speed) }}mph</h6>
-        <h6 class="clouds">Clouds: {{ weather.clouds.all }}%</h6>
+        <h6 class="temperature">Temperature: {{ Math.round(weather.weather.main.temp) }}&deg;F</h6>
+        <h6 class="high">High: {{ Math.round(weather.weather.main.temp_max) }}&deg;F</h6>
+        <h6 class="low">Low: {{ Math.round(weather.weather.main.temp_min) }}&deg;F</h6>
+        <h6 class="humidity">Humidity: {{ weather.weather.main.humidity }}%</h6>
+        <h6 class="wind">Wind: {{ Math.round(weather.weather.wind.speed) }}mph</h6>
+        <h6 class="clouds">Clouds: {{ weather.weather.clouds.all }}%</h6>
 
         <div class="weather-image">
           <img
-            :src="`http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`"
+            :src="`http://openweathermap.org/img/wn/${weather.weather.weather[0].icon}@2x.png`"
             alt="current weather image"
           />
-          <p>{{ weather.weather[0].description }}</p>
+          <p>{{ weather.weather.weather[0].description }}</p>
         </div>
       </div>
     </div>
