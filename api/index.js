@@ -11,10 +11,7 @@ const geoAPIKey = process.env.GEO_API_KEY;
 
 app.use(
   cors({
-    // origin: 'https://weather-measure.netlify.app'
-    // origin: 'http://localhost:5173/'
-    // origin: 'http://localhost:3000/'
-    origin: '*'
+    origin: 'https://weather-measure.netlify.app'
   })
 );
 
