@@ -3,16 +3,18 @@
   <div class="cards">
     <template v-if="forecast">
       <div v-for="day in formatForecast()" :key="day.dt" class="card-details">
-        <h3>
+        <h2>
           {{ new Date(day.dt * 1000).toLocaleDateString('en-us', { weekday: 'short' }) }}
           {{ new Date(day.dt * 1000).getDate() }}
-        </h3>
+        </h2>
 
         <img :src="`http://openweathermap.org/img/wn/${day.weather[0].icon}@2x.png`" />
 
-        <h4>High: {{ Math.round(day.main.temp_max) }}&deg;F</h4>
-        <h4>Low: {{ Math.round(day.main.temp_min) }}&deg;F</h4>
-        <h4>{{ day.weather[0].description }}</h4>
+        <div class="description">{{ day.weather[0].description }}</div>
+        <div class="flex">
+          <div class="high">High: {{ Math.round(day.main.temp_max) }}&deg;F</div>
+          <div class="low">Low: {{ Math.round(day.main.temp_min) }}&deg;F</div>
+        </div>
       </div>
     </template>
   </div>
@@ -53,21 +55,14 @@ const formatForecast = () => {
   letter-spacing: 2px;
 }
 
-h4 {
-  font-weight: 500;
-  letter-spacing: 2px;
-}
 img {
   max-width: 5rem;
-  margin: 0 auto;
 }
 
 .cards {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
   gap: 2rem;
-
-  min-height: 300px;
   padding: 1rem 0;
 }
 .card-details {
@@ -76,8 +71,21 @@ img {
   border: 3px solid #000;
   border-radius: 10px;
   box-shadow: 5px 5px 0px #000;
-  padding: 3rem 0;
-  text-align: center;
+  padding: 1.5rem;
   font-size: 1.2rem;
 }
+
+.card-details .description {
+  font-weight: bold;
+}
+
+.card-details .flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* .card-details .high,
+.low {
+  font-weight: bold;
+} */
 </style>
