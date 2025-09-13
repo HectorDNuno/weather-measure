@@ -152,7 +152,6 @@ const addCity = () => {
   border-radius: 100%;
   box-shadow: 2px 2px 0px #000;
   cursor: pointer;
-  z-index: 1;
 }
 
 .location i:hover {
@@ -186,36 +185,43 @@ const addCity = () => {
   }
 
   .weather-info .weather-details {
-    text-align: center;
     margin-top: 1rem;
   }
 
-  .temperature {
+  .clouds,
+  .temperature,
+  .humidity,
+  .high,
+  .low,
+  .wind {
     grid-column: 1 / span 3;
+  }
+
+  .clouds {
+    grid-row: 1;
+  }
+
+  .temperature {
     grid-row: 2;
   }
   .humidity {
-    grid-column: 1 / span 3;
     grid-row: 3;
   }
 
-  .high {
-    grid-column: 1 / span 3;
-    grid-row: 6;
-  }
-
   .low {
-    grid-column: 1 / span 3;
     grid-row: 4;
   }
 
   .wind {
-    grid-column: 1 / span 3;
     grid-row: 5;
   }
 
+  .high {
+    grid-row: 6;
+  }
+
   .weather-details .weather-image {
-    grid-column: 1 / span 3;
+    grid-column: 1 / span 1;
     grid-row: 7;
   }
 
