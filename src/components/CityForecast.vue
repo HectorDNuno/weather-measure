@@ -30,7 +30,7 @@ const props = defineProps({
 const { forecast } = toRefs(props);
 
 const formatForecast = () => {
-  const forecastArray = forecast.value.list;
+  const forecastArray = forecast.value.forecast.list;
   const fiveDayForecast = [];
   const seenDates = [];
 
