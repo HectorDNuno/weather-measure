@@ -2,12 +2,20 @@
   <h2 class="title">Saved Cities</h2>
   <div class="saved-cities">
     <div v-for="city in sharedState.savedCities" :key="city.id" class="city-weather">
-      <div>
-        <h2>{{ city.city }}</h2>
-        <h6>Temp: {{ Math.round(city.weather.currentTemp) }}&deg;F</h6>
-        <h6>H: {{ Math.round(city.weather.highTemp) }}&deg;F</h6>
-        <h6>L: {{ Math.round(city.weather.lowTemp) }}&deg;F</h6>
+      <div class="weather">
+        <h3>{{ city.city }}</h3>
+        <h1 class="temp">{{ Math.round(city.weather.currentTemp) }}&deg;F</h1>
+        <img
+          :src="`http://openweathermap.org/img/wn/${city.weather.icon}@2x.png`"
+          alt="current weather image"
+        />
+        <div class="description">{{ city.weather.description }}</div>
+        <div class="flex-container">
+          <div class="high">H: {{ Math.round(city.weather.highTemp) }}</div>
+          <div class="low">L: {{ Math.round(city.weather.lowTemp) }}</div>
+        </div>
       </div>
+
       <i @click="removeCity(city.id)" class="fa-solid fa-circle-minus fa-2x"></i>
     </div>
   </div>
@@ -42,7 +50,9 @@ const getCityWeatherData = () => {
         sharedState.savedCities[index].weather = {
           currentTemp: cityWeatherData.data.main.temp,
           highTemp: cityWeatherData.data.main.temp_max,
-          lowTemp: cityWeatherData.data.main.temp_min
+          lowTemp: cityWeatherData.data.main.temp_min,
+          icon: cityWeatherData.data.weather[0].icon,
+          description: cityWeatherData.data.weather[0].main
         };
       });
     });
@@ -68,6 +78,14 @@ onMounted(() => {
   letter-spacing: 2px;
 }
 
+.city-weather div .flex-container {
+  display: flex;
+}
+
+.city-weather div .flex-container .high {
+  margin-right: 1rem;
+}
+
 .city-weather {
   display: flex;
   justify-content: space-between;
@@ -79,20 +97,14 @@ onMounted(() => {
   background: #c6b9ff;
 }
 
-.city-weather h6 {
-  margin-top: 12px;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 2px;
+.city-weather img {
+  max-width: 5rem;
+  padding-top: 1rem;
 }
 
-.city-weather p {
-  letter-spacing: 2px;
-}
-.city-weather h2 {
-  font-weight: 700;
-  font-size: 1.7rem;
-  letter-spacing: 2px;
+.city-weather .description {
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .city-weather i {
